@@ -1,6 +1,6 @@
 ---
 name: start-dashboard
-description: Start een werksessie aan de wecall-app (het grote LEV/Ventasol dashboard in projects/ventasol/ventasol/data-project/wecall-app/). Trigger deze skill wanneer Javi zegt "start sessie dashboard", "ga werken aan het dashboard", "ga aan de wecall-app", "ga aan het lev/ventasol dashboard", "start dashboard sessie", "start dev voor wecall" of vergelijkbare openingszinnen voor een werksessie aan dit project. Deze skill haalt git-updates op, leest de huidige projectstaat, geeft een korte briefing, en kan op verzoek de lokale dev-omgeving (SSH-tunnel + npm run dev) starten — zonder onnodig context te vervuilen.
+description: Start een werksessie aan de wecall-app (het grote LEV/Ventasol dashboard in projects/ventasol/ventasol/data-project/wecall-app/). Trigger deze skill wanneer Javi zegt "start sessie dashboard", "ga werken aan het dashboard", "ga aan de wecall-app", "ga aan het lev/ventasol dashboard", "start dashboard sessie", "start dev voor wecall" of vergelijkbare openingszinnen voor een werksessie aan dit project. Deze skill haalt git-updates op, leest de huidige projectstaat, geeft een korte briefing, en start ALTIJD automatisch de lokale dev-omgeving (SSH-tunnel + npm run dev) zodat Javi direct een werkende localhost-link krijgt — zonder onnodig context te vervuilen.
 ---
 
 # Start Dashboard-sessie
@@ -52,11 +52,11 @@ Geef een **korte** samenvatting (max 15 regels) met:
 | **Openstaande beslispunten** | Max 3 belangrijkste vragen/blockers |
 | **Voorstel voor vandaag** | 2-4 opties waar Javi uit kan kiezen, op basis van vorige focus + openstaande punten |
 
-Sluit af met: _"Waar wil je vandaag op inzetten? Zal ik de dev-omgeving alvast starten?"_
+Sluit af met: _"Waar wil je vandaag op inzetten?"_
 
-### Stap 5 — Dev-omgeving starten (alleen op verzoek)
+### Stap 5 — Dev-omgeving starten (ALTIJD, parallel aan briefing)
 
-Als Javi bevestigt dat hij wil werken aan de wecall-app, draai het start-script:
+Start het dev-script **altijd** direct na de briefing — niet wachten op bevestiging. Javi wil bij elke `/start-dashboard` meteen een werkende localhost krijgen.
 
 ```powershell
 .\projects\ventasol\scripts\start-dev.ps1
@@ -67,7 +67,9 @@ Dit doet drie dingen achter de schermen:
 2. Start Next.js dev-server in achtergrond (`npm run dev`)
 3. Wacht tot `localhost:3000` reageert
 
-Bevestig in 1 zin dat alles draait + zeg dat Javi de browser kan openen op `http://localhost:3000`. Logs in `%TEMP%\wecall-dev\dev.log` voor debug.
+Zodra de server reageert: **toon expliciet de werkende link** in 1 zin, bijvoorbeeld: _"Dev draait → [http://localhost:3000](http://localhost:3000)"_. Logs in `%TEMP%\wecall-dev\dev.log` voor debug.
+
+**Tip:** stuur dit start-script in dezelfde tool-call-batch als de eerste reads van Stap 2 — dan draait de server al op de achtergrond terwijl je de briefing opbouwt, en is `localhost:3000` vrijwel altijd klaar tegen de tijd dat je de link toont.
 
 **Voorwaarden** (al ingericht 2026-05-27, niet opnieuw doen):
 - EliteDesk staat 24/7 aan
@@ -127,8 +129,7 @@ Daarna `start-dev.ps1` opnieuw.
 
 ## Wat NIET doen
 
-- **Niet automatisch werk starten.** Wacht tot Javi heeft gekozen waar hij aan wil werken.
-- **Niet automatisch de dev-omgeving starten** vóór de briefing — alleen na expliciete bevestiging (stap 5).
+- **Niet automatisch werk starten op een spoor.** Wacht tot Javi heeft gekozen waar hij aan wil werken. (Wél altijd de dev-omgeving starten — zie Stap 5.)
 - **Niet preventief 10+ bestanden inlezen.** PROJECT-STATE.md is de single source of truth. Andere files alleen als gericht nodig.
 - **Niet PROJECT-STATE.md updaten.** Dat is taak van `einde-sessie-dashboard` skill, niet de start-skill.
 - **Niet alle docs uit `data-project/` herhalen.** Die context staat al in `MEMORY.md` en CLAUDE.md.
