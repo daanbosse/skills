@@ -28,6 +28,11 @@ Als de pull merge-conflicten geeft of onverwacht veel veranderingen toont, **sto
 ### Stap 2 — Diff sinds laatste sessie + huidige staat (parallel)
 Lees in één bericht parallel:
 
+0. **`projects/ventasol/ventasol/data-project/RUNS.md` — ALTIJD, en als eerste.** Hier staan de
+   lopende runs (Steam-/Salesdock-ingest, downloads, transcriptie, analyses, backfills), die
+   dagen tot weken duren en vaak op een andere machine draaien. Zonder dit lees je zo een half
+   gevulde tabel als eindstand. Let vooral op de regels **⚠️ Onbetrouwbaar zolang dit loopt**
+   en op runs die **stilstaan** — stilstand en klaar zien er in de data identiek uit.
 1. `projects/ventasol/ventasol/data-project/wecall-app/PROJECT-STATE.md` — volledig
 2. `git -C projects/ventasol/ventasol log --oneline ${LAST_COMMIT}..HEAD` waarbij `${LAST_COMMIT}` de hash is uit PROJECT-STATE.md sectie "Laatste sessie-marker"
 3. `git -C projects/ventasol/ventasol status` — voor uncommitted werk
@@ -46,6 +51,7 @@ Geef een **korte** samenvatting (max 15 regels) met:
 
 | Sectie | Inhoud |
 |---|---|
+| **Lopende runs** | Alleen als er iets loopt of stilstaat volgens `RUNS.md`: 1 regel per run met wat er loopt en wat daardoor nu onbetrouwbaar is. Zet dit **bovenaan** — het bepaalt of de cijfers van vandaag te vertrouwen zijn |
 | **Status sinds vorige sessie** | Aantal nieuwe commits + 1-regel beschrijving per stuk |
 | **Working tree** | Clean / wijzigingen openstaand (welke files) |
 | **Vorige focus** | Wat stond als volgende stap in PROJECT-STATE |

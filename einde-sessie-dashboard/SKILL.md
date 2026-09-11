@@ -62,6 +62,34 @@ Pad: `projects/ventasol/ventasol/data-project/wecall-app/intelligence/`
 
 Korte registry-update-notitie wordt opgenomen in de sessie-log (Stap 4) en in PROJECT-STATE.md (Stap 3) zodat de volgende sessie weet dat de registry bij is.
 
+### Stap 2C — Werk `RUNS.md` bij (ALTIJD checken, ook als je denkt van niet)
+
+Pad: `projects/ventasol/ventasol/data-project/RUNS.md`
+
+Dit is de plek waar de lopende runs staan: Steam- en Salesdock-ingest, downloads, transcriptie,
+analyses, backfills. Alles wat langer loopt dan één sessie en vaak op een andere machine draait.
+Javi werkt met meerdere chats tegelijk, en de chat van morgen ziet zonder dit bestand alleen een
+half gevulde tabel.
+
+**Loop deze drie vragen altijd langs, ook bij een sessie zonder run-werk:**
+
+1. **Is er deze sessie een langlopende run gestart?** → blok toevoegen. Verplicht: wat, waarom,
+   waar (machine + geplande taak of proces), gestart wanneer, stand, het read-only
+   **Meet zelf**-commando, verwacht klaar, en **⚠️ Onbetrouwbaar zolang dit loopt**. Dat laatste
+   veld is het hele punt van het bestand — sla het nooit over.
+2. **Is er een run afgelopen of gestopt?** → verplaatsen naar *Recent afgerond*, met één regel
+   over wat er nu anders is in de data. Een run die stilvalt hoort in *Nu actief* te blijven
+   staan met de reden erbij, want stilstand en klaar zien er in de data identiek uit.
+3. **Zijn de getallen in de bestaande blokken nog actueel?** → bijwerken met de
+   Meet zelf-commando's. Kost een minuut en is read-only.
+
+Sneuvelt een cijfer in een projectdocument door een run (bijvoorbeeld een kaart-document zoals
+`wecall-ai/55-lev-recycling-overzicht.md`), werk dat document dan óók bij. Anders spreekt de
+kaart de werkelijkheid tegen en wint het verkeerde document.
+
+**Niet verplaatsen naar `wecall-app/`.** De deploy-workflow triggert op
+`data-project/wecall-app/**`; een run-log daarbinnen herbouwt bij elke update productie.
+
 ### Stap 3 — Werk PROJECT-STATE.md bij
 Pad: `projects/ventasol/ventasol/data-project/wecall-app/PROJECT-STATE.md`
 
@@ -132,6 +160,7 @@ Als er deze sessie iets is geleerd dat **niet uit code/git afleidbaar is** en in
 
 ### Stap 6 — Afsluiting
 Korte samenvatting aan Javi:
+- `RUNS.md` bijgewerkt (welke runs erbij, af, of alleen cijfers verversd) of expliciet: geen runs geraakt
 - PROJECT-STATE.md bijgewerkt (1-regel wat veranderd is)
 - Sessie-log geschreven (pad noemen)
 - Eventuele memory-suggesties (als gevraagd)
