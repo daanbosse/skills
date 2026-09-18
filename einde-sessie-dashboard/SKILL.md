@@ -19,7 +19,7 @@ git -C projects/ventasol/ventasol diff --stat
 ```
 
 Identificeer:
-- Welke commits zijn deze sessie gemaakt? (commits met datum vandaag of na de "Laatste commit" uit PROJECT-STATE.md)
+- Welke commits zijn deze sessie gemaakt? (commits sinds de datum in de markerrij "Laatste sessie-datum" van PROJECT-STATE.md; zoek die rij met Grep, lees het bestand niet volledig)
 - Welke files zijn nog uncommitted? (Javi committeert vaak zelf — niet zelf committen tenzij gevraagd)
 - Welke onderwerpen / API's / pagina's zijn aangeraakt?
 - **Welke files uit `data-project/wecall-app/intelligence/change-impact.md` zijn aangeraakt?** (huidige top-6: `sales-category.ts`, `ventasol-buckets.ts`, `lev-cost-model.ts`, `ventasol-cost-model.ts`, `sollit-pipeline.ts`, `config-registry.ts`). Maak een lijstje — dat is input voor Stap 2B.
@@ -77,9 +77,11 @@ half gevulde tabel.
    waar (machine + geplande taak of proces), gestart wanneer, stand, het read-only
    **Meet zelf**-commando, verwacht klaar, en **⚠️ Onbetrouwbaar zolang dit loopt**. Dat laatste
    veld is het hele punt van het bestand — sla het nooit over.
-2. **Is er een run afgelopen of gestopt?** → verplaatsen naar *Recent afgerond*, met één regel
-   over wat er nu anders is in de data. Een run die stilvalt hoort in *Nu actief* te blijven
-   staan met de reden erbij, want stilstand en klaar zien er in de data identiek uit.
+2. **Is er een run afgelopen of gestopt?** → één regel in *Recent afgerond* over wat er nu anders
+   is in de data, en het volledige blok naar *Archief* onderaan het bestand. Laat afgeronde
+   blokken nooit onder *Nu actief* staan (op 17-09 stonden er ruim 45 en de kop gaf een vals
+   beeld). Een run die stilvalt blijft wél in *Nu actief*, met de reden erbij, want stilstand en
+   klaar zien er in de data identiek uit.
 3. **Zijn de getallen in de bestaande blokken nog actueel?** → bijwerken met de
    Meet zelf-commando's. Kost een minuut en is read-only.
 
@@ -93,14 +95,21 @@ kaart de werkelijkheid tegen en wint het verkeerde document.
 ### Stap 3 — Werk PROJECT-STATE.md bij
 Pad: `projects/ventasol/ventasol/data-project/wecall-app/PROJECT-STATE.md`
 
-**Altijd updaten:**
-- Sectie "Laatste sessie-marker":
-  - `Laatste sessie-datum` → vandaag (gebruik systeem-datum, niet verzinnen)
-  - `Laatste commit op moment van sluiten` → meest recente commit-hash + onderwerpregel
-  - `Branch` → check
-  - `Working tree status` → clean / wijzigingen + welke files
-  - `Volgende stap (besloten)` → wat Javi in stap 2 noemde
-- Sectie "Veranderlog op dit bestand": voeg regel toe met datum + 1-zin samenvatting wijziging
+⚠️ **Lees PROJECT-STATE.md nooit volledig** (~118k tokens). Zoek de plek met Grep en lees alleen
+die regels met `offset`/`limit`, dan een gerichte Edit.
+
+**Altijd updaten: de sessiemarker.** De sectie "Laatste sessie-marker" is een tabel waarin elke
+sessie één rij is, nieuwste bovenaan. `/start-dashboard` leest **alleen de bovenste rij** en haalt
+er de datum uit om de commits sinds de vorige sessie te tonen. Dus:
+- Hernoem het label van de huidige bovenste rij van `**Laatste sessie-datum**` naar
+  `Sessie daarvoor` (eventueel met het spoor erachter, zoals de bestaande rijen).
+- Zet daarboven een nieuwe rij in exact deze vorm (één regel, de datum MOET direct na `| **` staan):
+  ```
+  | **Laatste sessie-datum** | **YYYY-MM-DD: ONDERWERP IN HOOFDLETTERS. KERNUITKOMST.** Laatste commit `<hash>` (<onderwerp>), branch `main`, working tree <schoon / welke gevolgde bestanden>. Verslag: `sessions/<bestand>.md`. **Open:** <wat openstaat>. **Volgende stap:** <wat Javi in stap 2 noemde>. |
+  ```
+  Datum = systeemdatum, niet verzinnen. Houd de rij kort (richtlijn: onder 1.500 tekens); de
+  details horen in het sessieverslag, niet in de marker.
+- Sectie "Veranderlog op dit bestand": voeg een regel toe met datum en één zin over de wijziging.
 
 **Updaten als relevant:**
 - "Huidige focus (TL;DR)" — als de sprintrichting verschoven is
@@ -191,4 +200,6 @@ Lees eerst de bestaande memory-entry (via `MEMORY.md`-pointer), check of die upd
 
 ## Context-budget
 
-Heel deze skill blijft onder 5k tokens. PROJECT-STATE-update is een gerichte Edit, geen Read-+-rewrite. Sessie-log is een nieuw bestand, max 30 regels.
+Heel deze skill blijft onder 5k tokens. PROJECT-STATE-update is een gerichte Edit, geen Read-+-rewrite. Sessie-log is een nieuw bestand, max 30 regels. RUNS.md ook nooit volledig lezen: bovenaan tot *Recent afgerond* is genoeg, een specifieke run zoek je op nummer.
+
+Verandert de sessie iets aan de **structuur** van het project (nieuwe machine, bron, grote module, rol van een persoon, definitie of harde regel), stel dan ook een correctie voor op `skills/start-dashboard/WECALL-KAART.md`.
