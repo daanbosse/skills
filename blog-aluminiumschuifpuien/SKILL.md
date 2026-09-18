@@ -57,11 +57,21 @@ Je schrijft een blogpost voor AluminiumSchuifpuien.nl. Volg onderstaande instruc
 
 ---
 
+### Financiering via de gemeente (SVn-leningen, sinds 2026-09-03)
+Feiten met peildatum, schrijfregels en de stand per gemeente in het werkgebied staan in `projects/Aluminiumschuifpuien.nl/FINANCIERING-SVN.md` (goedgekeurde feitenbron naast de sitepagina's). Lening is nooit subsidie; "renteloos" alleen Warmtefonds onder 60.000 euro inkomen; rente altijd met bron + peildatum; een schuifpui telt alleen mee als de gemeenteverordening glas of kozijnen noemt.
+
+---
+
 ## 3. Keyword Strategie
 
 ### Primair keyword
 - Één focus per post — nooit twee onderwerpen
 - Staat in: title tag, H1, eerste 100 woorden, URL, alt-tekst hoofdafbeelding, minimaal 2–3x in de body
+- **Neem het keyword uit de `[kw: ...]`-stempel bij het onderwerp in `CONTENT-BACKLOG.md`** (vooraf
+  gevalideerd tegen echte zoekvraag uit onze Google Ads). Verzin geen eigen keyword; volg een
+  waarschuwing in de stempel. Geen stempel? Valideer met `node scripts/_keyword-research.mjs "<kw>"`
+  in `wecall-app/`. **ads-blind** in de stempel = informatievraag zonder Ads-data, is OK; **zwak** =
+  alleen met een écht unieke invalshoek.
 
 ### Secundaire keywords (2–4 per post)
 - Synoniemen en gerelateerde termen
