@@ -56,6 +56,7 @@ console, logs of een model.
 | Bron | Wat | Landt in schema |
 |---|---|---|
 | **Steam** (belplatform) | Records, belhistorie, live belvloer (RTD-websocket), audio | `steam`, `steam_live` |
+| **Steam klantenservice** (setup 204, campagne 17, sinds 15-10-2026) | KS-records + belhistorie, op telefoon aan de klantkaart; transcripten via `corpus.leg` met ID-voorvoegsel | `klantenservice.steam_*` |
 | **Salesdock** | Sales, relaties, statushistorie, formulier-leads | `salesdock` |
 | **Sollit** (ERP) | Pipeline kozijnen/installatie, on-hold-fases | `sollit` |
 | **werktijden.nl** | Uren → loonkosten, rendabiliteit | `werktijden` |
@@ -146,6 +147,9 @@ Tests: `npm run test` (regressie), `test:authz` (rechten), `test:aichat` (geldle
 
 ## 8. Technische valkuilen (elk heeft al eens geld of een dag gekost)
 
+- **Steam nummert record- en gesprek-ID's per campagne.** De klantenservice (204) botst met Ventasol:
+  nooit in `steam.campaign_records`/`campaign_record_history`, en in gedeelde sleutels (corpus, audio-cache)
+  altijd onder `KS_CORPUS_OFFSET` (`lib/corpus/ks-sleutel.ts`). Steam filtert `lastCalled` in lokale tijd.
 - JS-array in `ANY(${...})` met Drizzle faalt **stil**: bouw een SQL-array met `sql.join`.
 - Drizzle/node-postgres geeft datums als **string** terug.
 - `npm run build` naast een draaiende dev-server legt dev plat (gedeelde `.next`).
