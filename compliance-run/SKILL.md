@@ -224,3 +224,9 @@ Opgebouwd op 19-10-2026 uit run 117 en de vorige runs 95, 103 en 110. Lessen die
   (`trajectCte`), dus zo'n leg is een vals signaal. Altijd de datum van de ontbrekende leg naast die van de sale leggen.
 - 27-10: de classifier weigerde ook `Register-ScheduledTask` (Unauthorized Persistence). Geef Javi dan registratie en start in
   één PowerShell-blok, te plakken in een eigen venster na zijn go (de `!` in Antigravity werkt niet).
+- 29-10 (run 127): §5 groepeert op de saledag van het record, niet op de datum van de ontbrekende leg; leg ze per record naast
+  elkaar. `--tot` gisteren gaf 4 echte nakomers (werving van dezelfde dag nog in transcriptie), `--tot` een dag terug liet de
+  bewaker stoppen op 5 records met een tweede voicelog de dag erna. Uitweg: `--records` met precies de doelrecords van het
+  venster (de query van `selectRecords()`), gecontroleerd met een DRY-toets via het startbestand zelf (zonder `--run --score`).
+  De preflight telt die grensrecords niet (laatste gespreksdatum valt buiten zijn venster); de nameting zet ze op de dag van
+  de tweede leg. Registreren van de Taakplanner-taak werkte deze keer wel. Doorlooptijd 27 min voor 201 gesprekken.
